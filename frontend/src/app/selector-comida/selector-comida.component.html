@@ -1,0 +1,7 @@
+<table>
+    <tr *ngFor="let comida of comidas">
+        <td class="contenedor-comida" (click)="seleccionarComida(comida.id)">
+            {{comida.nombre}}
+        </td>
+    </tr>
+</table>
