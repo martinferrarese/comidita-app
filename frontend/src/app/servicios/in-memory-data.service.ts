@@ -17,11 +17,11 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
 
     let dias = [
-      { id: 1, nombre: "Lunes", almuerzo: null, cena: null},
-      { id: 2, nombre: "Martes", almuerzo: null, cena: null},
-      { id: 3, nombre: "Miercoles", almuerzo: null, cena: null},
-      { id: 4, nombre: "Jueves", almuerzo: null, cena: null},
-      { id: 5, nombre: "Viernes", almuerzo: null, cena: null},
+      { id: 1, nombre: "Lunes", almuerzo: undefined, cena: undefined},
+      { id: 2, nombre: "Martes", almuerzo: undefined, cena: undefined},
+      { id: 3, nombre: "Miercoles", almuerzo: undefined, cena: undefined},
+      { id: 4, nombre: "Jueves", almuerzo: undefined, cena: undefined},
+      { id: 5, nombre: "Viernes", almuerzo: undefined, cena: undefined},
     ]
     return {comidas, dias}
   }
