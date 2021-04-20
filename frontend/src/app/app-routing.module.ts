@@ -5,8 +5,7 @@ import { SemanaComponent } from './semana/semana.component';
 
 const routes: Routes = [
   { path: '', component: SemanaComponent },
-  { path: 'lista-comidas/:idDia', component: SelectorComidaComponent },
-  { path: 'semana/:idComida', component: SemanaComponent },
+  { path: 'lista-comidas', component: SelectorComidaComponent },
 ];
 
 @NgModule({

@@ -33,17 +33,28 @@ export class SelectorComidaComponent implements OnInit {
 
   seleccionarComida(idComidaSeleccionada: number): void{
     let idDiaAModificar = Number(this.router.snapshot.paramMap.get("idDia"));
-    this.diaService.obtenerDiaPorId(idDiaAModificar).subscribe(
-      diaObtenido => {
-        diaObtenido.almuerzo = this.comidas.filter(comida => comida.id === idComidaSeleccionada)[0];
-        this.diaService.actualizarDia(diaObtenido).subscribe(
-          () => this.location.back());
-      });
-  }
+      this.router.queryParams.subscribe(
+      params => {
+        let tipoDeComida = params['tipoDeComida'];
+        let idDia = params['idDia'];
+        
+        this.diaService.obtenerDiaPorId(idDia).subscribe(
+          diaObtenido => {
+            let comida = this.comidas.filter(comida => comida.id === idComidaSeleccionada)[0];
 
-  setear(dia: Dia) {
-    this.dia = dia;
-    console.error(this.dia);
+            if(tipoDeComida === "almuerzo"){
+              diaObtenido.almuerzo = comida;
+            }
+            if(tipoDeComida === "cena"){
+              diaObtenido.cena = comida;
+            }
+            
+            this.diaService.actualizarDia(diaObtenido).subscribe(
+              () => this.location.back());
+          }
+        );
+      }
+    )
   }
 
 }
