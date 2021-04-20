@@ -23,4 +23,12 @@ export class SemanaComponent implements OnInit {
     );
   }
 
+  eliminarAlmuerzo(dia: Dia): void{
+    dia.almuerzo = undefined;
+  }
+
+  eliminarCena(dia: Dia): void{
+    dia.cena = undefined;
+  }
+
 }

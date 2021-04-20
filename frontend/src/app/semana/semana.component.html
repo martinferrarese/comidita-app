@@ -1,19 +1,45 @@
 <div *ngFor="let dia of semana">
+
     <h2>{{dia.nombre}}</h2>
+
     <div class="contenedor-almuerzo">
         <h3 class="titulo-comida">Almuerzo </h3>
-        <a [routerLink]="['lista-comidas']" [queryParams]=
-        "{idDia: dia.id, tipoDeComida:'almuerzo'}">
-            <button *ngIf="dia.almuerzo === null">+</button>
-        </a>
-        <span *ngIf="dia.almuerzo">{{dia.almuerzo.nombre}}</span>
+        <div class="div-boton" *ngIf="!dia.almuerzo">
+            <a [routerLink]="['lista-comidas']" [queryParams]=
+            "{idDia: dia.id, tipoDeComida:'almuerzo'}">
+                <button>+</button>
+            </a>
+        </div>
+        <div class="div-boton" *ngIf="dia.almuerzo">
+            <a [routerLink]="['lista-comidas']" [queryParams]=
+            "{idDia: dia.id, tipoDeComida:'almuerzo'}">
+                <button>Cambiar comida</button>
+            </a>
+            <button (click)="eliminarAlmuerzo(dia)">X</button>
+        </div>
+        <div *ngIf="dia.almuerzo">
+            <span>{{dia.almuerzo.nombre}}</span>
+        </div>
     </div>
+
     <div class="contenedor-cena">
         <h3 class="titulo-comida">Cena </h3>
-        <a [routerLink]="['lista-comidas']" [queryParams]=
-        "{idDia: dia.id, tipoDeComida:'cena'}">
-            <button *ngIf="dia.cena === null">+</button>
-        </a>
-        <span *ngIf="dia.cena">{{dia.cena.nombre}}</span>
+        <div class="div-boton" *ngIf="!dia.cena">
+            <a [routerLink]="['lista-comidas']" [queryParams]=
+            "{idDia: dia.id, tipoDeComida:'cena'}">
+                <button>+</button>
+            </a>
+        </div>
+        <div class="div-boton" *ngIf="dia.cena">
+            <a [routerLink]="['lista-comidas']" [queryParams]=
+            "{idDia: dia.id, tipoDeComida:'cena'}">
+                <button>Cambiar comida</button>
+            </a>
+            <button (click)="eliminarCena(dia)">X</button>
+        </div>
+        <div *ngIf="dia.cena">
+            <span *ngIf="dia.cena">{{dia.cena.nombre}}</span>
+        </div>
     </div>
+
 </div>
