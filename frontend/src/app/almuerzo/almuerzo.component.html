@@ -1,7 +1,0 @@
-<div class="contenedor-almuerzo">
-    <h3 class="titulo-comida">Almuerzo </h3>
-    <a [routerLink]="['lista-comidas', dia.id]">
-        <button *ngIf="dia.almuerzo === null">+</button>
-    </a>
-    <span *ngIf="dia.almuerzo">{{dia.almuerzo.nombre}}</span>
-</div>
