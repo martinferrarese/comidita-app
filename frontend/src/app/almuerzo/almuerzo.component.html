@@ -1,0 +1,19 @@
+<div class="contenedor-almuerzo">
+    <h3 class="titulo-comida">Almuerzo </h3>
+    <div class="div-boton" *ngIf="!dia.almuerzo">
+        <a [routerLink]="['lista-comidas']" [queryParams]=
+        "{idDia: dia.id, tipoDeComida:'almuerzo'}">
+            <button>+</button>
+        </a>
+    </div>
+    <div class="div-boton" *ngIf="dia.almuerzo">
+        <a [routerLink]="['lista-comidas']" [queryParams]=
+        "{idDia: dia.id, tipoDeComida:'almuerzo'}">
+            <button>Cambiar comida</button>
+        </a>
+        <button (click)="eliminarAlmuerzo(dia)">X</button>
+    </div>
+    <div *ngIf="dia.almuerzo">
+        <span>{{dia.almuerzo.nombre}}</span>
+    </div>
+</div>
