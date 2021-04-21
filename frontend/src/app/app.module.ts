@@ -8,12 +8,16 @@ import { SelectorComidaComponent } from './selector-comida/selector-comida.compo
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './servicios/in-memory-data.service';
+import { AlmuerzoComponent } from './almuerzo/almuerzo.component';
+import { CenaComponent } from './cena/cena.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SemanaComponent,
-    SelectorComidaComponent
+    SelectorComidaComponent,
+    AlmuerzoComponent,
+    CenaComponent
   ],
   imports: [
     BrowserModule,
