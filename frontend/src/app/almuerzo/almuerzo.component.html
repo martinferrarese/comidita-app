@@ -2,13 +2,13 @@
     <h3 class="titulo-comida">Almuerzo </h3>
     <div class="div-boton" *ngIf="!dia.almuerzo">
         <a [routerLink]="['lista-comidas']" [queryParams]=
-        "{idDia: dia.id, tipoDeComida:'almuerzo'}">
+        "{idDia: dia.id, momentoDelDia:'almuerzo'}">
             <button>+</button>
         </a>
     </div>
     <div class="div-boton" *ngIf="dia.almuerzo">
         <a [routerLink]="['lista-comidas']" [queryParams]=
-        "{idDia: dia.id, tipoDeComida:'almuerzo'}">
+        "{idDia: dia.id, momentoDelDia:'almuerzo'}">
             <button>Cambiar comida</button>
         </a>
         <button (click)="eliminarAlmuerzo(dia)">X</button>

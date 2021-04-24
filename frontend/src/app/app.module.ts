@@ -10,6 +10,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './servicios/in-memory-data.service';
 import { AlmuerzoComponent } from './almuerzo/almuerzo.component';
 import { CenaComponent } from './cena/cena.component';
+import { NuevaComidaComponent } from './nueva-comida/nueva-comida.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CenaComponent } from './cena/cena.component';
     SemanaComponent,
     SelectorComidaComponent,
     AlmuerzoComponent,
-    CenaComponent
+    CenaComponent,
+    NuevaComidaComponent
   ],
   imports: [
     BrowserModule,

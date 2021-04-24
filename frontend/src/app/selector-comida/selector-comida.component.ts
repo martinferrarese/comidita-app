@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Comida } from '../modelos/comida';
 import { Dia } from '../modelos/dia';
 import { ComidaService } from '../servicios/comida.service';
@@ -18,7 +18,8 @@ export class SelectorComidaComponent implements OnInit {
 
   constructor(private comidaService: ComidaService,
      private location: Location, 
-     private router: ActivatedRoute,
+     private activatedRoute: ActivatedRoute,
+     private router: Router,
      private diaService: DiaService) { }
 
   ngOnInit(): void {
@@ -27,34 +28,57 @@ export class SelectorComidaComponent implements OnInit {
 
   obtenerComidas(): void {
     this.comidaService.obtenerComidas().subscribe(
-      comidasObtenidas => this.comidas = comidasObtenidas
+      (comidasObtenidas) => {
+        this.comidas = comidasObtenidas;
+      }
     );
   }
 
   seleccionarComida(idComidaSeleccionada: number): void{
-    let idDiaAModificar = Number(this.router.snapshot.paramMap.get("idDia"));
-      this.router.queryParams.subscribe(
+    this.activatedRoute.queryParams.subscribe(
       params => {
-        let tipoDeComida = params['tipoDeComida'];
-        let idDia = params['idDia'];
-        
+        let momentoDelDía: string = params['momentoDelDia'];
+        let idDia: number = params['idDia'];
+
         this.diaService.obtenerDiaPorId(idDia).subscribe(
           diaObtenido => {
-            let comida = this.comidas.filter(comida => comida.id === idComidaSeleccionada)[0];
-
-            if(tipoDeComida === "almuerzo"){
-              diaObtenido.almuerzo = comida;
-            }
-            if(tipoDeComida === "cena"){
-              diaObtenido.cena = comida;
-            }
-            
+            let comidaSeleccionada = this.comidas.filter(comida => comida.id === idComidaSeleccionada)[0];
+            this.agregaComidaAlMomentoDelDíaCorrespondiente(momentoDelDía, diaObtenido, comidaSeleccionada);
             this.diaService.actualizarDia(diaObtenido).subscribe(
-              () => this.location.back());
+              () => this.router.navigate(['/'])
+            );
           }
         );
       }
-    )
+    );
+  }
+
+  private agregaComidaAlMomentoDelDíaCorrespondiente(tipoDeComida: any, diaObtenido: Dia, comidaSeleccionada: Comida) {
+    if (tipoDeComida === "almuerzo") {
+      diaObtenido.almuerzo = comidaSeleccionada;
+    }
+    if (tipoDeComida === "cena") {
+      diaObtenido.cena = comidaSeleccionada;
+    }
+  }
+
+  onAgregarComida(comidaNuevaSeleccionada: Comida): void {
+      this.activatedRoute.queryParams.subscribe(
+      params => {
+        let momentoDelDía: string = params['momentoDelDia'];
+        let idDia: number = params['idDia'];
+
+        this.diaService.obtenerDiaPorId(idDia).subscribe(
+          diaObtenido => {
+            
+            this.agregaComidaAlMomentoDelDíaCorrespondiente(momentoDelDía, diaObtenido, comidaNuevaSeleccionada);
+            this.diaService.actualizarDia(diaObtenido).subscribe(
+              () => this.router.navigate(['/'])
+            );
+          }
+        );
+      }
+    );
   }
 
 }
