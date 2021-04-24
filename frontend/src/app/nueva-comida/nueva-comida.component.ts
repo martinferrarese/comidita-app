@@ -18,7 +18,6 @@ export class NuevaComidaComponent implements OnInit {
   }
 
   agregarComida(nombreComida: HTMLInputElement): void {
-    console.error(nombreComida.value);
     let nuevaComida = new Comida();
     nuevaComida.nombre = nombreComida.value;
     nombreComida.value = "";
