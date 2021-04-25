@@ -11,9 +11,9 @@
             </tr>
             <tr *ngFor="let comida of comidas">
                 <td>
-                    <a [routerLink]="['/editar-comida', comida.id]"><span>{{comida.nombre}}</span></a>
+                    <span>{{comida.nombre}}</span>
                 </td>
-                <td><button id="btn-editar-comida">E</button></td>
+                <td><a [routerLink]="['/editar-comida', comida.id]"><button id="btn-editar-comida">E</button></a></td>
                 <td><button id="btn-borrar-comida" (click)="eliminarComida(comida)">X</button></td>
             </tr>
         </table>

@@ -24,7 +24,7 @@ export class EditorComidasComponent implements OnInit {
         comidasObtenidas => this.comidas = comidasObtenidas
       );
     }
-    else{
+    else {
       this.modoEdicion = true;
       this.comidaService.obtenerComida(idComidaAEditar).subscribe(
         comidaObtenida => this.comidaAEditar = comidaObtenida
