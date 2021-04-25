@@ -19,4 +19,7 @@ export class EditorComidasComponent implements OnInit {
     )
   }
 
+  onAgregarComida(comidaNuevaAgregada: Comida) {
+    this.comidas.push(comidaNuevaAgregada);
+  }
 }

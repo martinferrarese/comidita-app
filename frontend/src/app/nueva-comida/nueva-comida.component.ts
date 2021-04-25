@@ -22,9 +22,7 @@ export class NuevaComidaComponent implements OnInit {
     nuevaComida.nombre = nombreComida.value;
     nombreComida.value = "";
     this.comidaService.agregarComida(nuevaComida).subscribe(
-      (comida) => {
-        this.agregarComidaEmmiter.emit(comida);
-      }
+      comida => this.agregarComidaEmmiter.emit(comida)
     );
   }
 
