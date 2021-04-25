@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Comida } from '../modelos/comida';
 import { ComidaService } from '../servicios/comida.service';
 
@@ -10,13 +11,25 @@ import { ComidaService } from '../servicios/comida.service';
 export class EditorComidasComponent implements OnInit {
 
   comidas : Comida[];
+  comidaAEditar: Comida;
+  modoEdicion: boolean = false;
 
-  constructor(private comidaService: ComidaService) { }
+  constructor(private comidaService: ComidaService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.comidaService.obtenerComidas().subscribe(
-      comidasObtenidas => this.comidas = comidasObtenidas
-    )
+    let idComidaAEditar = Number(this.activatedRoute.snapshot.paramMap.get("idComida"));
+    if(idComidaAEditar === null || idComidaAEditar === 0){
+      this.modoEdicion = false;
+      this.comidaService.obtenerComidas().subscribe(
+        comidasObtenidas => this.comidas = comidasObtenidas
+      );
+    }
+    else{
+      this.modoEdicion = true;
+      this.comidaService.obtenerComida(idComidaAEditar).subscribe(
+        comidaObtenida => this.comidaAEditar = comidaObtenida
+      );
+    }
   }
 
   onAgregarComida(comidaNuevaAgregada: Comida) {
