@@ -10,7 +10,7 @@
         <tr *ngFor="let comida of comidas">
             <td><span>{{comida.nombre}}</span></td>
             <td><button id="btn-editar-comida">E</button></td>
-            <td><button id="btn-borrar-comida">X</button></td>
+            <td><button id="btn-borrar-comida" (click)="eliminarComida(comida)">X</button></td>
         </tr>
     </table>
 </div>

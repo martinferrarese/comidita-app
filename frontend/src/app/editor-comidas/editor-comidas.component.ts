@@ -22,4 +22,10 @@ export class EditorComidasComponent implements OnInit {
   onAgregarComida(comidaNuevaAgregada: Comida) {
     this.comidas.push(comidaNuevaAgregada);
   }
+
+  eliminarComida(comidaAEliminar: Comida): void {
+    this.comidas = this.comidas.filter(comida => comida.id !== comidaAEliminar.id);
+    this.comidaService.eliminarComida(comidaAEliminar);
+  }
+
 }

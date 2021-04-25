@@ -8,6 +8,14 @@ import { Comida } from '../modelos/comida';
 })
 export class ComidaService {
 
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
+  eliminarComida(comidaAEliminar: Comida): Observable<any>{
+    return this.http.delete<Comida>(`api/comidas/${comidaAEliminar.id}`, this.httpOptions);
+  }
+
   constructor(private http: HttpClient) { }
 
   obtenerComidas(): Observable<Comida[]> {
