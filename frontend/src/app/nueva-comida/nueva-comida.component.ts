@@ -18,12 +18,14 @@ export class NuevaComidaComponent implements OnInit {
   }
 
   agregarComida(nombreComida: HTMLInputElement): void {
-    let nuevaComida = new Comida();
-    nuevaComida.nombre = nombreComida.value;
-    nombreComida.value = "";
-    this.comidaService.agregarComida(nuevaComida).subscribe(
-      comida => this.agregarComidaEmmiter.emit(comida)
-    );
+    if(nombreComida.value !== ""){
+      let nuevaComida = new Comida();
+      nuevaComida.nombre = nombreComida.value;
+      nombreComida.value = "";
+      this.comidaService.agregarComida(nuevaComida).subscribe(
+        comida => this.agregarComidaEmmiter.emit(comida)
+      );
+    }
   }
 
 }
