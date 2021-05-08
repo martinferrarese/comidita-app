@@ -1,0 +1,29 @@
+<div>
+    <h1>Editor de comidas</h1>
+
+    <div *ngIf="modoEdicion === false">
+        <app-nueva-comida (agregarComidaEmmiter)="onAgregarComida($event)"></app-nueva-comida>
+        <table>
+            <tr>
+                <th>Comida</th>
+                <th>Editar</th>
+                <th>Borrar</th>
+            </tr>
+            <tr *ngFor="let comida of comidas">
+                <td>
+                    <span>{{comida.nombre}}</span>
+                </td>
+                <td><a [routerLink]="['/editar-comida', comida.id]"><button id="btn-editar-comida">E</button></a></td>
+                <td><button id="btn-borrar-comida" (click)="eliminarComida(comida)">X</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div *ngIf="modoEdicion === true && comidaAEditar">
+        <label for="nombreComida">Nombre: </label>
+        <input #nombreComida type="text" value="{{comidaAEditar.nombre}}" />
+        <br>
+        <button id="btnVolver" (click)="volver()">Volver</button>
+        <button id="btnGuardarYVolver" (click)="guardarYVolver(nombreComida.value)">Guardar y volver</button>
+    </div>
+</div>

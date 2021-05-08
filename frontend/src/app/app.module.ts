@@ -11,6 +11,7 @@ import { InMemoryDataService } from './servicios/in-memory-data.service';
 import { AlmuerzoComponent } from './almuerzo/almuerzo.component';
 import { CenaComponent } from './cena/cena.component';
 import { NuevaComidaComponent } from './nueva-comida/nueva-comida.component';
+import { EditorComidasComponent } from './editor-comidas/editor-comidas.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NuevaComidaComponent } from './nueva-comida/nueva-comida.component';
     SelectorComidaComponent,
     AlmuerzoComponent,
     CenaComponent,
-    NuevaComidaComponent
+    NuevaComidaComponent,
+    EditorComidasComponent
   ],
   imports: [
     BrowserModule,

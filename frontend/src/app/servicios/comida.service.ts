@@ -8,6 +8,22 @@ import { Comida } from '../modelos/comida';
 })
 export class ComidaService {
 
+  actualizarComida(comidaEditada: Comida): Observable<any> {
+    return this.http.put('api/comidas', comidaEditada, this.httpOptions);
+  }
+  
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+  
+  obtenerComida(idComida: number): Observable<Comida> {
+    return this.http.get<Comida>(`api/comidas/${idComida}`);
+  }
+
+  eliminarComida(comidaAEliminar: Comida): Observable<any>{
+    return this.http.delete<Comida>(`api/comidas/${comidaAEliminar.id}`, this.httpOptions);
+  }
+
   constructor(private http: HttpClient) { }
 
   obtenerComidas(): Observable<Comida[]> {
