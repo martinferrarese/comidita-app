@@ -20,6 +20,10 @@
     </div>
 
     <div *ngIf="modoEdicion === true && comidaAEditar">
-        <h2>{{comidaAEditar.nombre}}</h2>
+        <label for="nombreComida">Nombre: </label>
+        <input #nombreComida type="text" value="{{comidaAEditar.nombre}}" />
+        <br>
+        <button id="btnVolver" (click)="volver()">Volver</button>
+        <button id="btnGuardarYVolver" (click)="guardarYVolver(nombreComida.value)">Guardar y volver</button>
     </div>
 </div>

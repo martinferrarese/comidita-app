@@ -7,6 +7,10 @@ import { Comida } from '../modelos/comida';
   providedIn: 'root'
 })
 export class ComidaService {
+
+  actualizarComida(comidaEditada: Comida): Observable<any> {
+    return this.http.put('api/comidas', comidaEditada, this.httpOptions);
+  }
   
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
