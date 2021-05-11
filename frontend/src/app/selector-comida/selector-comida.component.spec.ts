@@ -5,6 +5,7 @@ import { SelectorComidaComponent } from './selector-comida.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable, of } from 'rxjs';
 import { Comida } from '../modelos/comida';
+import { HttpClient } from '@angular/common/http';
 
 fdescribe('SelectorComidaComponent', () => {
   let component: SelectorComidaComponent;
@@ -12,32 +13,17 @@ fdescribe('SelectorComidaComponent', () => {
   let comidaServiceStub: Partial<ComidaService>;
   let comidaService: ComidaService;
 
-  let comida: Comida[] = [
-    { id: 1, nombre: "Tarta", ingredientes: [] },
-    { id: 2, nombre: "Milanesas", ingredientes: [] },
-    { id: 3, nombre: "Huevos", ingredientes: [] } ];
-
   beforeEach(() => {
-    comidaServiceStub = {
-      obtenerComidas(): Observable<Comida[]> {
-        const comida: Comida[] = [
-          { id: 1, nombre: "Tarta", ingredientes: [] },
-          { id: 2, nombre: "Milanesas", ingredientes: [] },
-          { id: 3, nombre: "Huevos", ingredientes: [] }
-        ];
-        return of(comida);
-      }
-    };
-
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         HttpClientTestingModule
       ],
       providers: [
-        SelectorComidaComponent,
-        { provider: ComidaService, useValue: comidaServiceStub }]
+        SelectorComidaComponent
+      ]
     });
+
     fixture = TestBed.createComponent(SelectorComidaComponent);
     component = fixture.componentInstance;
     comidaService = TestBed.inject(ComidaService);
@@ -46,16 +32,20 @@ fdescribe('SelectorComidaComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(component.comidas).toEqual([]);
   });
 
-  it('debe obtener 3 comidas al ejecutar ngOnInit()', () => {
-    expect(component.comidas).toEqual([]);
-    component.obtenerComidas();
-    expect(component.comidas).toEqual([]);
-    console.error(component.comidas);
-    
-    //expect(component.comidas).toEqual(comida);
+  it('debe obtener 2 comidas al ejecutar ngOnInit()', () => {
+    component.comidas = [];
+    const respuesta: Comida[] = [
+      { id: 1, nombre: "Tarta", ingredientes: [] },
+      { id: 2, nombre: "Milanesa", ingredientes: [] }
+    ];
+    spyOn(comidaService, 'obtenerComidas').and.returnValue(of(respuesta));
+
+    component.ngOnInit();
+
+    expect(component.comidas.length).toEqual(2);
   });
 
 });
+

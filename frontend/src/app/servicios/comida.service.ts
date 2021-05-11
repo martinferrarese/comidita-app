@@ -8,6 +8,8 @@ import { Comida } from '../modelos/comida';
 })
 export class ComidaService {
 
+  constructor(private http: HttpClient) { }
+
   actualizarComida(comidaEditada: Comida): Observable<any> {
     return this.http.put('api/comidas', comidaEditada, this.httpOptions);
   }
@@ -23,8 +25,6 @@ export class ComidaService {
   eliminarComida(comidaAEliminar: Comida): Observable<any>{
     return this.http.delete<Comida>(`api/comidas/${comidaAEliminar.id}`, this.httpOptions);
   }
-
-  constructor(private http: HttpClient) { }
 
   obtenerComidas(): Observable<Comida[]> {
     return this.http.get<Comida[]>('api/comidas');
