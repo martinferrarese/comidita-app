@@ -1,4 +1,3 @@
-import { Location, PlatformLocation } from '@angular/common';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
