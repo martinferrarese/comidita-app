@@ -58,16 +58,18 @@ fdescribe('SelectorComidaComponent', () => {
     expect(component.comidas.length).toEqual(2);
   });
 
-  it('debe renderizar una comida en la tabla', () => {
-    //Dado que tengo una sola comida
-    const comidaMock = [ {id: 1, nombre: "Sopa", ingredientes: []} ];
-    spyOn(comidaService, 'obtenerComidas').and.returnValue(of(comidaMock));
+  it('debe renderizar dos comidas en la tabla', () => {
+    //Dado que tengo dos comidas
+    const comidasEnPantalla = [ {id: 1, nombre: "Sopa", ingredientes: []}, {id: 2, nombre: "Tarta", ingredientes: []} ];
+    spyOn(comidaService, 'obtenerComidas').and.returnValue(of(comidasEnPantalla));
     //Cuando inicio el componente
     component.ngOnInit();
     fixture.detectChanges();
-    //Entonces veo la comida
-    const comidaListada: HTMLElement = fixture.debugElement.nativeElement.querySelector('td');
-    expect(comidaListada.innerHTML.trim()).toEqual(comidaMock[0].nombre);
+    //Entonces veo las dos comidas en la tabla
+    const sopa: HTMLElement = fixture.debugElement.nativeElement.querySelectorAll('td')[0];
+    expect(sopa.innerHTML.trim()).toEqual(comidasEnPantalla[0].nombre);
+    const tarta: HTMLElement = fixture.debugElement.nativeElement.querySelectorAll('td')[1];
+    expect(tarta.innerHTML.trim()).toEqual(comidasEnPantalla[1].nombre);
   })
 
 });
