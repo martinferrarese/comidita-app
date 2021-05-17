@@ -56,9 +56,8 @@ export class SelectorComidaComponent implements OnInit {
   seleccionarComida(idComidaSeleccionada: number): void{
     let comidaSeleccionada = this.comidas.filter(comida => comida.id === idComidaSeleccionada)[0];
     this.agregaComidaAlMomentoDelDíaCorrespondiente(this.momentoDelDía, this.diaAModificar, comidaSeleccionada);
-    this.diaService.actualizarDia(this.diaAModificar).subscribe(
-      () => this.router.navigate(['/'])
-    );
+    this.diaService.actualizarDia(this.diaAModificar).subscribe();
+    this.router.navigate(['/']);
   }
 
   private agregaComidaAlMomentoDelDíaCorrespondiente(tipoDeComida: string, diaAModificar: Dia, comidaSeleccionada: Comida) {
@@ -70,22 +69,8 @@ export class SelectorComidaComponent implements OnInit {
   }
 
   onAgregarComida(comidaNuevaSeleccionada: Comida): void {
-    this.activatedRoute.queryParams.subscribe(
-      params => {
-        let momentoDelDía: string = params['momentoDelDia'];
-        let idDia: number = params['idDia'];
-
-        this.diaService.obtenerDiaPorId(idDia).subscribe(
-          diaObtenido => {
-            
-            this.agregaComidaAlMomentoDelDíaCorrespondiente(momentoDelDía, diaObtenido, comidaNuevaSeleccionada);
-            this.diaService.actualizarDia(diaObtenido).subscribe(
-              () => this.router.navigate(['/'])
-            );
-          }
-        );
-      }
-    );
+    this.comidas.push(comidaNuevaSeleccionada);
+    this.seleccionarComida(comidaNuevaSeleccionada.id);
   }
 
 }
