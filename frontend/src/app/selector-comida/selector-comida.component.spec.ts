@@ -8,7 +8,6 @@ import { Comida } from '../modelos/comida';
 import { DiaService } from '../servicios/dia.service';
 import { ActivatedRoute } from '@angular/router';
 import { Dia } from '../modelos/dia';
-import { By } from '@angular/platform-browser';
 
 fdescribe('SelectorComidaComponent', () => {
   let component: SelectorComidaComponent;
@@ -55,7 +54,7 @@ fdescribe('SelectorComidaComponent', () => {
     const comidaServiceSpy = spyOn(comidaService, 'obtenerComidas').and.returnValue(of(respuesta));
     const diaRespuesta = new Dia();
     diaRespuesta.id = 1;
-    const diaServiceSpy = spyOn(diaService, 'obtenerDiaPorId').and.returnValue(of(diaRespuesta))
+    const diaServiceSpy = spyOn(diaService, 'obtenerDiaPorId').and.returnValue(of(diaRespuesta));
     // Cuando inicio el componente
     component.ngOnInit();
     // Entonces contiene el componente tiene dos comidas
@@ -79,7 +78,25 @@ fdescribe('SelectorComidaComponent', () => {
     expect(sopa.innerHTML.trim()).toEqual(comidasEnPantalla[0].nombre);
     const tarta: HTMLElement = fixture.debugElement.nativeElement.querySelector('#comida-2');
     expect(tarta.innerHTML.trim()).toEqual(comidasEnPantalla[1].nombre);
-    By.css('#comida2')
+  });
+
+  it('debe seleccionar la comida sopa al hacerle click en la lista', () => {
+    // Dado que tengo dos comidas, el día es Lunes y el momento del día es el almuerzo
+    const comidasEnPantalla = [ {id: 1, nombre: "Sopa", ingredientes: []}, {id: 2, nombre: "Tarta", ingredientes: []} ];
+    spyOn(comidaService, 'obtenerComidas').and.returnValue(of(comidasEnPantalla));
+    const diaRespuesta = new Dia();
+    diaRespuesta.id = 1;
+    diaRespuesta.nombre = "Lunes";
+    diaRespuesta.almuerzo = undefined;
+    spyOn(diaService, 'obtenerDiaPorId').and.returnValue(of(diaRespuesta));
+    // Al seleccionar la comida sopa
+    component.ngOnInit();
+    fixture.detectChanges();
+    const sopa: HTMLElement = fixture.debugElement.nativeElement.querySelector('#comida-1');
+    sopa.click();
+    // La sopa se planifica para el almuerzo del día Lunes
+    expect(component.diaAModificar.nombre).toEqual("Lunes");
+    expect(component.diaAModificar.almuerzo).toEqual(comidasEnPantalla[0]);
   });
 
 });
