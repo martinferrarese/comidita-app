@@ -10,14 +10,14 @@ export class ComidaService {
 
   constructor(private http: HttpClient) { }
 
-  actualizarComida(comidaEditada: Comida): Observable<any> {
-    return this.http.put('api/comidas', comidaEditada, this.httpOptions);
-  }
-  
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-  
+
+  actualizarComida(comidaEditada: Comida): Observable<any> {
+    return this.http.put('api/comidas', comidaEditada, this.httpOptions);
+  }
+
   obtenerComida(idComida: number): Observable<Comida> {
     return this.http.get<Comida>(`api/comidas/${idComida}`);
   }
