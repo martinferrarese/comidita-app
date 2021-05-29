@@ -8,6 +8,7 @@ import { Comida } from '../modelos/comida';
 import { DiaService } from '../servicios/dia.service';
 import { ActivatedRoute } from '@angular/router';
 import { Dia } from '../modelos/dia';
+import { By } from '@angular/platform-browser';
 
 fdescribe('SelectorComidaComponent', () => {
   let component: SelectorComidaComponent;
@@ -45,7 +46,7 @@ fdescribe('SelectorComidaComponent', () => {
   });
 
   it('debe inicializar todas sus properties al ejecutar ngOnInit()', () => {
-    //Dadas dos comidas
+    // Dadas dos comidas
     component.comidas = [];
     const respuesta: Comida[] = [
       { id: 1, nombre: "Tarta", ingredientes: [] },
@@ -55,9 +56,9 @@ fdescribe('SelectorComidaComponent', () => {
     const diaRespuesta = new Dia();
     diaRespuesta.id = 1;
     const diaServiceSpy = spyOn(diaService, 'obtenerDiaPorId').and.returnValue(of(diaRespuesta))
-    //Cuando inicio el componente
+    // Cuando inicio el componente
     component.ngOnInit();
-    //Entonces contiene el componente tiene dos comidas
+    // Entonces contiene el componente tiene dos comidas
     expect(comidaServiceSpy).toHaveBeenCalled();
     expect(component.comidas.length).toEqual(2);
     expect(component.idDia).toEqual(1);
@@ -67,17 +68,18 @@ fdescribe('SelectorComidaComponent', () => {
   });
 
   it('debe renderizar dos comidas en la tabla', () => {
-    //Dado que tengo dos comidas
+    // Dado que tengo dos comidas
     const comidasEnPantalla = [ {id: 1, nombre: "Sopa", ingredientes: []}, {id: 2, nombre: "Tarta", ingredientes: []} ];
     spyOn(comidaService, 'obtenerComidas').and.returnValue(of(comidasEnPantalla));
-    //Cuando inicio el componente
+    // Cuando inicio el componente
     component.ngOnInit();
     fixture.detectChanges();
-    //Entonces veo las dos comidas en la tabla
-    const sopa: HTMLElement = fixture.debugElement.nativeElement.querySelectorAll('td')[0];
+    // Entonces veo las dos comidas en la tabla
+    const sopa: HTMLElement = fixture.debugElement.nativeElement.querySelector('#comida-1');
     expect(sopa.innerHTML.trim()).toEqual(comidasEnPantalla[0].nombre);
-    const tarta: HTMLElement = fixture.debugElement.nativeElement.querySelectorAll('td')[1];
+    const tarta: HTMLElement = fixture.debugElement.nativeElement.querySelector('#comida-2');
     expect(tarta.innerHTML.trim()).toEqual(comidasEnPantalla[1].nombre);
+    By.css('#comida2')
   });
 
 });
