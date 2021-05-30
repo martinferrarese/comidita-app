@@ -59,14 +59,14 @@ fdescribe('SelectorComidaComponent', () => {
       const comidas = [ {id: 1, nombre: "Sopa", ingredientes: []}, {id: 2, nombre: "Tarta", ingredientes: []} ];
       return of(comidas);
     }
-    // Y dado que el día es lunes
+    // Y que el día es lunes
     diaService.obtenerDiaPorId = function(id) {
       const diaRespuesta = new Dia();
       diaRespuesta.id = id;
       diaRespuesta.nombre = "Lunes";
       return of(diaRespuesta);
     };
-    // Y dado que el momento del día es el almuerzo
+    // Y que el momento del día es el almuerzo
     activatedRoute.queryParams = of({ momentoDelDia: "almuerzo", idDia: 1 });
 
     // Cuando inicio el componente
@@ -104,7 +104,7 @@ fdescribe('SelectorComidaComponent', () => {
       const comidas = [ {id: 1, nombre: "Sopa", ingredientes: []}, {id: 2, nombre: "Ravioles", ingredientes: []} ];
       return of(comidas);
     }
-    // Y dado que el día es Lunes
+    // Y que el día es Lunes
     diaService.obtenerDiaPorId = function(id){
       const diaRespuesta = new Dia();
       diaRespuesta.id = id;
@@ -113,9 +113,9 @@ fdescribe('SelectorComidaComponent', () => {
       diaRespuesta.cena = undefined;
       return of(diaRespuesta);
     };
-    // Y dado que el momento del día es el almuerzo
+    // Y que el momento del día es el almuerzo
     activatedRoute.queryParams = of({ momentoDelDia: "almuerzo", idDia: 1 });
-    // Y dado que luego va a volver a la página principal
+    // Y que luego va a volver a la página principal
     const navigateSpy = router.navigate as jasmine.Spy;
 
     // Al seleccionar la comida sopa
@@ -136,7 +136,7 @@ fdescribe('SelectorComidaComponent', () => {
       const comidas = [ {id: 1, nombre: "Sopa", ingredientes: []}, {id: 2, nombre: "Tarta", ingredientes: []} ];
       return of(comidas);
     }
-    // Y dado que el día es martes
+    // Y que el día es martes
     diaService.obtenerDiaPorId = function(id){
       const diaRespuesta = new Dia();
       diaRespuesta.id = id;
@@ -144,7 +144,7 @@ fdescribe('SelectorComidaComponent', () => {
       diaRespuesta.cena = undefined;
       return of(diaRespuesta);
     };
-    // Y dado que el momento del día es la cena
+    // Y que el momento del día es la cena
     activatedRoute.queryParams = of({ momentoDelDia: "cena", idDia: 1 });
 
     // Al seleccionar la comida tarta
