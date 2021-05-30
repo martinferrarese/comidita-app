@@ -21,7 +21,7 @@ fdescribe('SelectorComidaComponent', () => {
   }
 
   let comidaServiceStub: Partial<ComidaService> = {};
-  let diaServiceStub: Partial<DiaService> = {};
+  let diaServiceStub: Partial<DiaService> = { actualizarDia: function(dia) {return of()}};
   let activatedRouteStub: Partial<ActivatedRoute> = {};
 
   beforeEach(() => {
