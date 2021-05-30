@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { ComidaService } from '../servicios/comida.service';
 import { SelectorComidaComponent } from './selector-comida.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { DiaService } from '../servicios/dia.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Dia } from '../modelos/dia';
 import { Component } from '@angular/core';
 
@@ -15,27 +14,29 @@ fdescribe('SelectorComidaComponent', () => {
   let comidaService: ComidaService;
   let activatedRoute: ActivatedRoute;
   let diaService: DiaService;
+  let router: Router;
 
   @Component({selector: 'app-nueva-comida', template: ''})
     class NuevaComidaComponentStub {
   }
 
   let comidaServiceStub: Partial<ComidaService> = {};
-  let diaServiceStub: Partial<DiaService> = { actualizarDia: function(dia) {return of()}};
-  let activatedRouteStub: Partial<ActivatedRoute> = {};
+  let diaServiceStub: Partial<DiaService> = { actualizarDia: function(dia) {return of()}, obtenerDiaPorId: function(id) {return of()}};
+  let activatedRouteStub: Partial<ActivatedRoute> = { queryParams: of() };
+  const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ SelectorComidaComponent, NuevaComidaComponentStub ],
       imports: [
-        RouterTestingModule,
         HttpClientTestingModule,
       ],
       providers: [
         [
           { provide: ComidaService, useValue: comidaServiceStub },
           { provide: DiaService, useValue: diaServiceStub },
-          { provide: ActivatedRoute, useValue: activatedRouteStub }
+          { provide: ActivatedRoute, useValue: activatedRouteStub },
+          { provide: Router, useValue: routerSpy }
         ]
       ]
     });
@@ -45,9 +46,10 @@ fdescribe('SelectorComidaComponent', () => {
     comidaService = fixture.debugElement.injector.get(ComidaService);
     activatedRoute = fixture.debugElement.injector.get(ActivatedRoute);
     diaService = fixture.debugElement.injector.get(DiaService);
+    router = fixture.debugElement.injector.get(Router);
   });
 
-  it('should create', () => {
+  it('debe crear el componente', () => {
     expect(component).toBeTruthy();
   });
 
@@ -113,6 +115,8 @@ fdescribe('SelectorComidaComponent', () => {
     };
     // Y dado que el momento del día es el almuerzo
     activatedRoute.queryParams = of({ momentoDelDia: "almuerzo", idDia: 1 });
+    // Y dado que luego va a volver a la página principal
+    const navigateSpy = router.navigate as jasmine.Spy;
 
     // Al seleccionar la comida sopa
     component.ngOnInit();
@@ -123,6 +127,7 @@ fdescribe('SelectorComidaComponent', () => {
     // La sopa se planifica para el almuerzo del día Lunes
     expect(component.diaAModificar.almuerzo?.nombre).toEqual("Sopa");
     expect(component.diaAModificar.nombre).toEqual("Lunes");
+    expect(navigateSpy).toHaveBeenCalledWith(['/']);
   });
 
   it('debe seleccionar la comida tarta al hacerle click en la lista y agendarla para la cena el martes', () => {
