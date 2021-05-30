@@ -158,4 +158,18 @@ fdescribe('SelectorComidaComponent', () => {
     expect(componente.diaAModificar.cena?.nombre).toEqual("Tarta");
   });
 
+  it('debe actualizar la lista de comidas al agregar una comida', () => {
+    // Dado que al inicio existe una sola comida
+    componente.comidas = [{id: 1, nombre: "Tarta de pollo", ingredientes: []}];
+    
+    // Cuando se agrega la nueva comida
+    const nuevaComida = {id: 2, nombre: "Empanadas", ingredientes: []};
+    componente.onAgregarComida(nuevaComida);
+    fixture.detectChanges();
+
+    //Entonces suma una nueva comida a la lista
+    expect(componente.comidas.length).toEqual(2);
+    expect(componente.comidas[1].nombre).toEqual("Empanadas");
+  });
+
 });
