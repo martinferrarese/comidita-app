@@ -9,7 +9,7 @@ import { Dia } from '../modelos/dia';
 import { Component } from '@angular/core';
 
 fdescribe('SelectorComidaComponent', () => {
-  let component: SelectorComidaComponent;
+  let componente: SelectorComidaComponent;
   let fixture: ComponentFixture<SelectorComidaComponent>;
   let comidaService: ComidaService;
   let activatedRoute: ActivatedRoute;
@@ -20,12 +20,12 @@ fdescribe('SelectorComidaComponent', () => {
     class NuevaComidaComponentStub {
   }
 
-  let comidaServiceStub: Partial<ComidaService> = {};
-  let diaServiceStub: Partial<DiaService> = { actualizarDia: function(dia) {return of()}, obtenerDiaPorId: function(id) {return of()}};
-  let activatedRouteStub: Partial<ActivatedRoute> = { queryParams: of() };
-  const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-
   beforeEach(() => {
+    let comidaServiceStub: Partial<ComidaService> = { obtenerComidas: function() { return of() } };
+    let activatedRouteStub: Partial<ActivatedRoute> = { queryParams: of([]) };
+    let diaServiceStub: Partial<DiaService> = { obtenerDiaPorId: function(id) {return of()}, actualizarDia: function(id) {return of()}};
+    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
     TestBed.configureTestingModule({
       declarations: [ SelectorComidaComponent, NuevaComidaComponentStub ],
       imports: [
@@ -42,7 +42,7 @@ fdescribe('SelectorComidaComponent', () => {
     });
 
     fixture = TestBed.createComponent(SelectorComidaComponent);
-    component = fixture.componentInstance;
+    componente = fixture.componentInstance;
     comidaService = fixture.debugElement.injector.get(ComidaService);
     activatedRoute = fixture.debugElement.injector.get(ActivatedRoute);
     diaService = fixture.debugElement.injector.get(DiaService);
@@ -50,7 +50,7 @@ fdescribe('SelectorComidaComponent', () => {
   });
 
   it('debe crear el componente', () => {
-    expect(component).toBeTruthy();
+    expect(componente).toBeTruthy();
   });
 
   it('debe inicializar todas las propiedades del componente al ejecutar ngOnInit()', () => {
@@ -70,14 +70,14 @@ fdescribe('SelectorComidaComponent', () => {
     activatedRoute.queryParams = of({ momentoDelDia: "almuerzo", idDia: 1 });
 
     // Cuando inicio el componente
-    component.ngOnInit();
+    componente.ngOnInit();
 
     // Entonces inicializa con esos valores
-    expect(component.comidas.length).toEqual(2);
-    expect(component.idDia).toEqual(1);
-    expect(component.momentoDelDia).toEqual("almuerzo");
-    expect(component.diaAModificar.nombre).toEqual("Lunes");
-    expect(component.diaAModificar.id).toEqual(1);
+    expect(componente.comidas.length).toEqual(2);
+    expect(componente.idDia).toEqual(1);
+    expect(componente.momentoDelDia).toEqual("almuerzo");
+    expect(componente.diaAModificar.nombre).toEqual("Lunes");
+    expect(componente.diaAModificar.id).toEqual(1);
   });
 
   it('debe renderizar dos comidas en la tabla', () => {
@@ -88,7 +88,7 @@ fdescribe('SelectorComidaComponent', () => {
     }
 
     // Cuando inicio el componente
-    component.ngOnInit();
+    componente.ngOnInit();
     fixture.detectChanges();
 
     // Entonces veo las dos comidas en la tabla
@@ -118,15 +118,15 @@ fdescribe('SelectorComidaComponent', () => {
     // Y que luego va a volver a la página principal
     const navigateSpy = router.navigate as jasmine.Spy;
 
-    // Al seleccionar la comida sopa
-    component.ngOnInit();
+    // Cuando selecciona la sopa
+    componente.ngOnInit();
     fixture.detectChanges();
     const sopa: HTMLElement = fixture.debugElement.nativeElement.querySelector('#comida-1');
     sopa.click();
 
-    // La sopa se planifica para el almuerzo del día Lunes
-    expect(component.diaAModificar.almuerzo?.nombre).toEqual("Sopa");
-    expect(component.diaAModificar.nombre).toEqual("Lunes");
+    // Entonces la sopa se planifica para el almuerzo del día Lunes
+    expect(componente.diaAModificar.almuerzo?.nombre).toEqual("Sopa");
+    expect(componente.diaAModificar.nombre).toEqual("Lunes");
     expect(navigateSpy).toHaveBeenCalledWith(['/']);
   });
 
@@ -147,15 +147,15 @@ fdescribe('SelectorComidaComponent', () => {
     // Y que el momento del día es la cena
     activatedRoute.queryParams = of({ momentoDelDia: "cena", idDia: 1 });
 
-    // Al seleccionar la comida tarta
-    component.ngOnInit();
+    // Cuando selecciona la tarta
+    componente.ngOnInit();
     fixture.detectChanges();
     const sopa: HTMLElement = fixture.debugElement.nativeElement.querySelector('#comida-2');
     sopa.click();
 
-    // La tarta se planifica para la cena del día martes
-    expect(component.diaAModificar.nombre).toEqual("Martes");
-    expect(component.diaAModificar.cena?.nombre).toEqual("Tarta");
+    // Entonces la tarta se planifica para la cena del día martes
+    expect(componente.diaAModificar.nombre).toEqual("Martes");
+    expect(componente.diaAModificar.cena?.nombre).toEqual("Tarta");
   });
 
 });
