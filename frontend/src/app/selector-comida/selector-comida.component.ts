@@ -1,6 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
 import { Comida } from '../modelos/comida';
 import { Dia } from '../modelos/dia';
 import { ComidaService } from '../servicios/comida.service';
