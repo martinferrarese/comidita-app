@@ -5,15 +5,15 @@
         <app-nueva-comida (agregarComidaEmmiter)="onAgregarComida($event)"></app-nueva-comida>
         <table>
             <tr>
-                <th>Comida</th>
+                <th id="header-comida">Comida</th>
                 <th>Editar</th>
                 <th>Borrar</th>
             </tr>
             <tr *ngFor="let comida of comidas">
-                <td>
+                <td [id]="'comida-' + comida.id">
                     <span>{{comida.nombre}}</span>
                 </td>
-                <td><a [routerLink]="['/editar-comida', comida.id]"><button id="btn-editar-comida">E</button></a></td>
+                <td><a [routerLink]="['/editar-comida']" [queryParams]="{idComida: comida.id}"><button id="btn-editar-comida">E</button></a></td>
                 <td><button id="btn-borrar-comida" (click)="eliminarComida(comida)">X</button></td>
             </tr>
         </table>

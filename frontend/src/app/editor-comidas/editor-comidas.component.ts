@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { pipe } from 'rxjs';
 import { Comida } from '../modelos/comida';
 import { ComidaService } from '../servicios/comida.service';
 
@@ -12,6 +11,7 @@ import { ComidaService } from '../servicios/comida.service';
 })
 export class EditorComidasComponent implements OnInit {
 
+  idComidaAEditar: number = 0;
   comidas : Comida[];
   comidaAEditar: Comida;
   modoEdicion: boolean = false;
@@ -20,8 +20,10 @@ export class EditorComidasComponent implements OnInit {
     private location: Location) { }
 
   ngOnInit(): void {
-    let idComidaAEditar = Number(this.activatedRoute.snapshot.paramMap.get("idComida"));
-    if(idComidaAEditar === null || idComidaAEditar === 0){
+    this.activatedRoute.queryParams.subscribe(
+      params => this.idComidaAEditar = Number(params['idComida'])
+    );
+    if(isNaN(this.idComidaAEditar)){
       this.modoEdicion = false;
       this.comidaService.obtenerComidas().subscribe(
         comidasObtenidas => this.comidas = comidasObtenidas
@@ -29,7 +31,7 @@ export class EditorComidasComponent implements OnInit {
     }
     else {
       this.modoEdicion = true;
-      this.comidaService.obtenerComida(idComidaAEditar).subscribe(
+      this.comidaService.obtenerComida(this.idComidaAEditar).subscribe(
         comidaObtenida => this.comidaAEditar = comidaObtenida
       );
     }
