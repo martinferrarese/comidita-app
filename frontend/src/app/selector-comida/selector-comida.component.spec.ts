@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Dia } from '../modelos/dia';
 import { Component } from '@angular/core';
 
-fdescribe('SelectorComidaComponent', () => {
+describe('SelectorComidaComponent', () => {
   let componente: SelectorComidaComponent;
   let fixture: ComponentFixture<SelectorComidaComponent>;
   let comidaService: ComidaService;
