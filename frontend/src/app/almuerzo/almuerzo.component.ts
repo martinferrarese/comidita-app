@@ -10,7 +10,7 @@ export class AlmuerzoComponent implements OnInit {
 
 
   @Input()
-  dia: Dia;
+  dia: Dia = new Dia();
   
   constructor() { }
 
