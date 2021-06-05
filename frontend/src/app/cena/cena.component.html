@@ -11,7 +11,7 @@
         "{idDia: dia.id, momentoDelDia:'cena'}">
             <button>Cambiar comida</button>
         </a>
-        <button (click)="eliminarCena(dia)">X</button>
+        <button id="boton-eliminar-cena" (click)="eliminarCena(dia)">X</button>
     </div>
     <div *ngIf="dia.cena">
         <span *ngIf="dia.cena">{{dia.cena.nombre}}</span>
