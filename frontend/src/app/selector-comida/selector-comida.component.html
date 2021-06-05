@@ -1,12 +1,8 @@
 <div class="en-linea">
-    <table>
-        <tr *ngFor="let comida of comidas">
-            <td class="contenedor-comida" (click)="seleccionarComida(comida.id)">
-                {{comida.nombre}}
-            </td>
-        </tr>
-    </table>
+    <ul>
+        <li [id]="'comida-' + comida.id" *ngFor="let comida of comidas" class="contenedor-comida" (click)="seleccionarComida(comida.id)">
+            {{comida.nombre}}
+        </li>
+    </ul>
 </div>
 <app-nueva-comida (agregarComidaEmmiter)="onAgregarComida($event)"></app-nueva-comida>
-
-

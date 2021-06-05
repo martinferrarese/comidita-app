@@ -1,7 +1,5 @@
-import { Location, PlatformLocation } from '@angular/common';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
 import { Comida } from '../modelos/comida';
 import { Dia } from '../modelos/dia';
 import { ComidaService } from '../servicios/comida.service';
@@ -15,7 +13,7 @@ import { DiaService } from '../servicios/dia.service';
 export class SelectorComidaComponent implements OnInit {
 
   comidas: Comida[];
-  momentoDelDía: string;
+  momentoDelDia: string;
   idDia: number;
   diaAModificar: Dia;
 
@@ -41,7 +39,7 @@ export class SelectorComidaComponent implements OnInit {
   private obtenerParametrosDeLaUrl() {
     this.activatedRoute.queryParams.subscribe(
       params => {
-        this.momentoDelDía = params['momentoDelDia'];
+        this.momentoDelDia = params['momentoDelDia'];
         this.idDia = params['idDia'];
       }
     )
@@ -55,7 +53,7 @@ export class SelectorComidaComponent implements OnInit {
 
   seleccionarComida(idComidaSeleccionada: number): void{
     let comidaSeleccionada = this.comidas.filter(comida => comida.id === idComidaSeleccionada)[0];
-    this.agregaComidaAlMomentoDelDíaCorrespondiente(this.momentoDelDía, this.diaAModificar, comidaSeleccionada);
+    this.agregaComidaAlMomentoDelDíaCorrespondiente(this.momentoDelDia, this.diaAModificar, comidaSeleccionada);
     this.diaService.actualizarDia(this.diaAModificar).subscribe();
     this.router.navigate(['/']);
   }
