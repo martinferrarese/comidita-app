@@ -5,25 +5,25 @@
         <app-nueva-comida (agregarComidaEmmiter)="onAgregarComida($event)"></app-nueva-comida>
         <table>
             <tr>
-                <th>Comida</th>
+                <th id="header-comida">Comida</th>
                 <th>Editar</th>
-                <th>Borrar</th>
+                <th>Eliminar</th>
             </tr>
             <tr *ngFor="let comida of comidas">
-                <td>
+                <td [id]="'nombre-comida-' + comida.id">
                     <span>{{comida.nombre}}</span>
                 </td>
-                <td><a [routerLink]="['/editar-comida', comida.id]"><button id="btn-editar-comida">E</button></a></td>
-                <td><button id="btn-borrar-comida" (click)="eliminarComida(comida)">X</button></td>
+                <td><a [routerLink]="['/editar-comida']" [queryParams]="{idComida: comida.id}"><button id="btn-editar-comida">E</button></a></td>
+                <td><button [id]="'btn-eliminar-comida-' + comida.id" (click)="eliminarComida(comida)">X</button></td>
             </tr>
         </table>
     </div>
 
     <div *ngIf="modoEdicion === true && comidaAEditar">
         <label for="nombreComida">Nombre: </label>
-        <input #nombreComida type="text" value="{{comidaAEditar.nombre}}" />
+        <input #nombreComida id="nombre-comida" type="text" value="{{comidaAEditar.nombre}}" />
         <br>
-        <button id="btnVolver" (click)="volver()">Volver</button>
-        <button id="btnGuardarYVolver" (click)="guardarYVolver(nombreComida.value)">Guardar y volver</button>
+        <button id="btn-volver" (click)="volver()">Volver</button>
+        <button id="btn-guardar-y-volver" (click)="guardarYVolver(nombreComida.value)">Guardar y volver</button>
     </div>
 </div>

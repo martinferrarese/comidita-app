@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', component: SemanaComponent },
   { path: 'lista-comidas', component: SelectorComidaComponent },
   { path: 'editar-comidas', component: EditorComidasComponent },
-  { path: 'editar-comida/:idComida', component: EditorComidasComponent },
+  { path: 'editar-comida', component: EditorComidasComponent },
 ];
 
 @NgModule({
