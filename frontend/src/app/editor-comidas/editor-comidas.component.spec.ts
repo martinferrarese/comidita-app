@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
+import { of, pipe } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { Comida } from '../modelos/comida';
 import { NuevaComidaComponent } from '../nueva-comida/nueva-comida.component';
@@ -19,7 +19,10 @@ describe('EditorComidasComponent', () => {
 
   beforeEach(() => {
     let activatedRouteStub: Partial<ActivatedRoute> = { queryParams: of([]) };
-    let comidaServiceStub: Partial<ComidaService> = { obtenerComida: () => {return of()}, obtenerComidas: () => {return of([])} };
+    let comidaServiceStub: Partial<ComidaService> = { 
+      obtenerComida: () => {return of()}, obtenerComidas: () => {return of([])},
+      actualizarComida: () => {return of()}
+    };
     let locationStub: Partial<Location> = { back: jasmine.createSpy('back') };
 
     TestBed.configureTestingModule({
@@ -159,4 +162,30 @@ describe('EditorComidasComponent', () => {
     // Entonces verifico que vuelvo
     expect(location.back).toHaveBeenCalled();
   });
+
+  it('debe cambiar el nombre de la comida y guardarla y volver al hacer clic en el botón guardar y volver', fakeAsync(() => {
+    // Dado que estoy en el modo edición de una comida
+    const idComida = 6;
+    activatedRoute.queryParams = of({idComida: idComida});
+    comidaService.obtenerComida = () => {
+      return of({id: idComida, nombre: 'Ensalada de garbanzos', ingredientes: []})
+    };
+    // Y dado que se va a guardar
+    const actualizarComidaSpy = spyOn(comidaService, 'actualizarComida').and.callFake(() => of(delay(1)));
+    fixture.detectChanges();
+
+    // Cuando le cambio el nombre a la comida
+    const inputNombreComida: HTMLInputElement = fixture.debugElement.nativeElement.querySelector('#nombre-comida');
+    inputNombreComida.value = "Ensalada de garbanzo y huevo";
+    // Cuando hago clic en el botón guardar y volver
+    const btnGuardarYVolver: HTMLButtonElement = fixture.debugElement.nativeElement.querySelector('#btn-guardar-y-volver');
+    btnGuardarYVolver.click();
+    tick(1);
+
+    // Entonces se actualiza la comida
+    expect(actualizarComidaSpy).toHaveBeenCalledWith(component.comidaAEditar);
+    expect(component.comidaAEditar.nombre).toEqual('Ensalada de garbanzo y huevo');
+    // Y vuelve
+    expect(location.back).toHaveBeenCalled();
+  }));
 });
