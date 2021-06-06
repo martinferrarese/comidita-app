@@ -8,23 +8,27 @@ import { Comida } from '../modelos/comida';
 import { NuevaComidaComponent } from '../nueva-comida/nueva-comida.component';
 import { ComidaService } from '../servicios/comida.service';
 import { EditorComidasComponent } from './editor-comidas.component';
+import { Location } from '@angular/common';
 
 describe('EditorComidasComponent', () => {
   let component: EditorComidasComponent;
   let fixture: ComponentFixture<EditorComidasComponent>;
   let comidaService: ComidaService;
   let activatedRoute: ActivatedRoute;
+  let location: Location;
 
   beforeEach(() => {
     let activatedRouteStub: Partial<ActivatedRoute> = { queryParams: of([]) };
     let comidaServiceStub: Partial<ComidaService> = { obtenerComida: () => {return of()}, obtenerComidas: () => {return of([])} };
+    let locationStub: Partial<Location> = { back: jasmine.createSpy('back') };
 
     TestBed.configureTestingModule({
       declarations: [ EditorComidasComponent, NuevaComidaComponent ],
       imports: [ HttpClientTestingModule, RouterTestingModule ],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub},
-        { provide: ComidaService, useValue: comidaServiceStub }
+        { provide: ComidaService, useValue: comidaServiceStub },
+        { provide: Location, useValue: locationStub }
       ]
     })
     .compileComponents();
@@ -33,6 +37,7 @@ describe('EditorComidasComponent', () => {
     component = fixture.componentInstance;
     comidaService = fixture.debugElement.injector.get(ComidaService);
     activatedRoute = fixture.debugElement.injector.get(ActivatedRoute);
+    location = fixture.debugElement.injector.get(Location);
   });
 
   it('debe crear el componente', () => {
@@ -136,5 +141,22 @@ describe('EditorComidasComponent', () => {
     fixture.detectChanges();
     expect(component.comidas.length).toEqual(2);
     expect(pizza).toBeNull();
+  });
+
+  it('debe volver luego de hacer clic en volver', () => {
+    // Dado que estoy en el modo edición de una comida
+    const idComida = 2;
+    activatedRoute.queryParams = of({idComida: idComida});
+    comidaService.obtenerComida = () => {
+      return of({id: idComida, nombre: 'Tarta de atún', ingredientes: []})
+    };
+    fixture.detectChanges();
+
+    // Cuando hago clic en el botón volver
+    const btnVolver: HTMLButtonElement = fixture.debugElement.nativeElement.querySelector('#btn-volver');
+    btnVolver.click();
+
+    // Entonces verifico que vuelvo
+    expect(location.back).toHaveBeenCalled();
   });
 });
