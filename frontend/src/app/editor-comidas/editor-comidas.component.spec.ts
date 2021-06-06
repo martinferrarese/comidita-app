@@ -56,9 +56,9 @@ describe('EditorComidasComponent', () => {
     fixture.detectChanges();
 
     // Entonces se listan las comidas
-    const arroz: HTMLTableDataCellElement = fixture.debugElement.nativeElement.querySelector('#comida-1');
+    const arroz: HTMLTableDataCellElement = fixture.debugElement.nativeElement.querySelector('#nombre-comida-1');
     expect(arroz.innerHTML).toContain("Arroz con pollo");
-    const milanesa: HTMLTableDataCellElement = fixture.debugElement.nativeElement.querySelector('#comida-2');
+    const milanesa: HTMLTableDataCellElement = fixture.debugElement.nativeElement.querySelector('#nombre-comida-2');
     expect(milanesa.innerHTML).toContain("Milanesa con ensalada");
     expect(component.modoEdicion).toEqual(false);
     expect(component.comidaAEditar).toBeUndefined();
@@ -96,7 +96,7 @@ describe('EditorComidasComponent', () => {
         {id: 2, nombre: "Milanesa con ensalada", ingredientes: []},
       ];
       return of(comidas);
-    }
+    };
     // Y se quiere agregar una nueva comida
     const idNuevaComida = 5;
     const nuevaComida: Comida = {id: idNuevaComida, nombre: "Picada", ingredientes: []};
@@ -107,8 +107,34 @@ describe('EditorComidasComponent', () => {
     fixture.detectChanges();
 
     // Se muestra por pantalla la nueva comida
-    const elementoNuevaComida: HTMLTableDataCellElement = fixture.debugElement.nativeElement.querySelector('#comida-' + idNuevaComida);
+    const elementoNuevaComida: HTMLTableDataCellElement = fixture.debugElement.nativeElement.querySelector('#nombre-comida-' + idNuevaComida);
     expect(elementoNuevaComida.innerHTML).toContain("Picada");
     expect(component.comidas.length).toEqual(3);
+  });
+
+  it('debe dejar de mostrar la comida en la lista cuando ésta es eliminada', () => {
+    // Dado que se listan 3 comidas
+    const idComidaAEliminar = 3;
+    comidaService.obtenerComidas = () => {
+      const comidas: Comida[] = [
+        {id: 5, nombre: "Arroz con pollo", ingredientes: []},
+        {id: 6, nombre: "Milanesa con ensalada", ingredientes: []},
+        {id: idComidaAEliminar, nombre: "Pizza", ingredientes: []},
+      ];
+      return of(comidas);
+    }
+    fixture.detectChanges();
+    expect(component.comidas.length).toEqual(3);
+    const pizza: HTMLTableDataCellElement = fixture.debugElement.nativeElement.querySelector('#comida-' + idComidaAEliminar);
+    expect(pizza).toBeDefined();
+
+    // Cuando elimino una de ellas
+    const botonEliminarPizza: HTMLButtonElement = fixture.debugElement.nativeElement.querySelector('#btn-eliminar-comida-' + idComidaAEliminar);
+    botonEliminarPizza.click();
+
+    // Entonces se deja de mostrar en la lista
+    fixture.detectChanges();
+    expect(component.comidas.length).toEqual(2);
+    expect(pizza).toBeNull();
   });
 });

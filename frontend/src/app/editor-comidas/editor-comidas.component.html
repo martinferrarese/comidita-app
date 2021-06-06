@@ -7,14 +7,14 @@
             <tr>
                 <th id="header-comida">Comida</th>
                 <th>Editar</th>
-                <th>Borrar</th>
+                <th>Eliminar</th>
             </tr>
             <tr *ngFor="let comida of comidas">
-                <td [id]="'comida-' + comida.id">
+                <td [id]="'nombre-comida-' + comida.id">
                     <span>{{comida.nombre}}</span>
                 </td>
                 <td><a [routerLink]="['/editar-comida']" [queryParams]="{idComida: comida.id}"><button id="btn-editar-comida">E</button></a></td>
-                <td><button id="btn-borrar-comida" (click)="eliminarComida(comida)">X</button></td>
+                <td><button [id]="'btn-eliminar-comida-' + comida.id" (click)="eliminarComida(comida)">X</button></td>
             </tr>
         </table>
     </div>
