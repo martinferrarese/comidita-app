@@ -87,4 +87,28 @@ describe('EditorComidasComponent', () => {
     expect(component.comidaAEditar).toBe(comida);
     expect(component.modoEdicion).toEqual(true);
   }));
+
+  it('debe mostrar una nueva comida en la lista al agregar una comida', () => {
+    // Dado que se tienen dos comidas al inicio
+    comidaService.obtenerComidas = () => {
+      const comidas: Comida[] = [
+        {id: 1, nombre: "Arroz con pollo", ingredientes: []},
+        {id: 2, nombre: "Milanesa con ensalada", ingredientes: []},
+      ];
+      return of(comidas);
+    }
+    // Y se quiere agregar una nueva comida
+    const idNuevaComida = 5;
+    const nuevaComida: Comida = {id: idNuevaComida, nombre: "Picada", ingredientes: []};
+
+    // Cuando se agrega una nueva comida
+    fixture.detectChanges();
+    component.onAgregarComida(nuevaComida);
+    fixture.detectChanges();
+
+    // Se muestra por pantalla la nueva comida
+    const elementoNuevaComida: HTMLTableDataCellElement = fixture.debugElement.nativeElement.querySelector('#comida-' + idNuevaComida);
+    expect(elementoNuevaComida.innerHTML).toContain("Picada");
+    expect(component.comidas.length).toEqual(3);
+  });
 });
