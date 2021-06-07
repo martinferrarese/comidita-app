@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { ComidaService } from '../servicios/comida.service';
 import { NuevaComidaComponent } from './nueva-comida.component';
 
@@ -28,10 +29,11 @@ describe('NuevaComidaComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debe vaciar el input luego de agregar una nueva comida ', () => {
+  it('debe vaciar el input luego de agregar una nueva comida ', fakeAsync(() => {
     // Dado que inicio el componente
-    const comidaServiceSpy = spyOn(comidaService, 'agregarComida');
-    component.ngOnInit();
+    const comidaServiceSpy = spyOn(comidaService, 'agregarComida').and.callFake(() => of(delay(1)));
+    const emitterSpy = spyOn(component.agregarComidaEmmiter, 'emit');
+    fixture.detectChanges();
 
     // Cuando ingreso un nombre de comida
     const inputAgregarComida: HTMLInputElement = fixture.debugElement.nativeElement.querySelector('#nombre-nueva-comida');
@@ -39,13 +41,15 @@ describe('NuevaComidaComponent', () => {
     // Y hago clic en agregar comida
     const botonAgregarComida: HTMLElement = fixture.debugElement.nativeElement.querySelector('#boton-agregar-comida');
     botonAgregarComida.click();
+    tick(1);
     fixture.detectChanges();
 
     // Entonces el valor del input se limpia
     expect(inputAgregarComida.value).toEqual("");
     // Y el servicio de comida es llamado para agregar la comida
     expect(comidaServiceSpy).toHaveBeenCalled();
-  });
+    expect(emitterSpy).toHaveBeenCalled();
+  }));
 
   it('debe no hacer nada al querer agregar una nueva comida si el valor del input está vacío', () => {
     // Dado que inicio el componente
