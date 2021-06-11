@@ -1,25 +1,22 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SemanaComponent } from './semana.component';
 
-describe('SemanaComponent', () => {
+fdescribe('SemanaComponent', () => {
   let component: SemanaComponent;
   let fixture: ComponentFixture<SemanaComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ SemanaComponent ]
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [ SemanaComponent ],
+      imports: [ HttpClientTestingModule ],
     })
     .compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(SemanaComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('debe crear el componente', () => {
     expect(component).toBeTruthy();
   });
 });
