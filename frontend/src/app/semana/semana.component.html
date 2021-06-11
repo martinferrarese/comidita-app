@@ -1,6 +1,6 @@
 <div *ngFor="let dia of semana">
 
-    <h2>{{dia.nombre}}</h2>
+    <h2 [id]="'dia-' + dia.id">{{dia.nombre}}</h2>
 
     <app-almuerzo [dia]="dia"></app-almuerzo>
 
