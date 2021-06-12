@@ -92,6 +92,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "codeCoverageExclude": ["src/app/servicios/in-memory-data.service.ts"],
             "assets": [
               "src/favicon.ico",
               "src/assets"
