@@ -6,4 +6,8 @@ export class ComidaRepository {
     public buscarComida(id:number) : Comida {
         return new Comida('');
     }
+
+    public buscarComidas(): Comida[] {
+        return [];
+    }
 }

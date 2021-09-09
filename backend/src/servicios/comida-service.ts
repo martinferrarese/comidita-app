@@ -8,7 +8,11 @@ export class ComidaService {
         this._comidaRepository = comidaRepository;
     }
 
-    public obtenerComida(id: number) : Comida {
+    public obtenerComida(id: number): Comida {
         return this._comidaRepository.buscarComida(id);
+    }
+
+    public obtenerComidas(): Comida[] {
+        return this._comidaRepository.buscarComidas();
     }
 }
