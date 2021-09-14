@@ -1,24 +1,25 @@
 export class Comida {
-    private _id: number = 0;
-    private _nombre: string;
+  private _id = 0;
 
-    constructor(nombreDeComida : string) {
-        this._nombre = nombreDeComida;
-    }
+  private _nombre: string;
 
-    set nombre(nombre: string) {
-        this._nombre = nombre;
-    }
+  constructor(nombreDeComida: string) {
+    this._nombre = nombreDeComida;
+  }
 
-    get nombre(): string {
-        return this._nombre;
-    }
+  set nombre(nombre: string) {
+    this._nombre = nombre;
+  }
 
-    set id(idASetear: number) {
-        this._id = idASetear;
-    }
+  get nombre(): string {
+    return this._nombre;
+  }
 
-    get id(): number {
-        return this._id;
-    }
+  set id(idASetear: number) {
+    this._id = idASetear;
+  }
+
+  get id(): number {
+    return this._id;
+  }
 }
