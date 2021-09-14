@@ -1,13 +1,13 @@
-import { Comida } from "../modelos/comida";
+import { Comida } from '../modelos/comida';
 
 export class ComidaRepository {
-    constructor() {}
+  public buscarComida(id: number): Comida {
+    const comida = new Comida('');
+    comida.id = id;
+    return comida;
+  }
 
-    public buscarComida(id:number) : Comida {
-        return new Comida('');
-    }
-
-    public buscarComidas(): Comida[] {
-        return [];
-    }
+  public buscarComidas(): Comida[] {
+    return [];
+  }
 }
