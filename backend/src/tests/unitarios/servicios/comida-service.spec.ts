@@ -9,7 +9,6 @@ let comidaRepository: ComidaRepository;
 
 function dadoQueSeTieneUnaTartaDeJamonYQuesoAlmacenadaConId4(): void {
   const comida: Comida = new Comida('Tarta de jamón y queso');
-  comida.id = 4;
   sinon.stub(comidaRepository, 'buscarComida').returns(comida);
 }
 
@@ -37,7 +36,7 @@ describe('Pruebas sobre ComidaService', () => {
     const comidaObtenida = new ComidaService(comidaRepository).obtenerComida(4);
 
     expect(comidaObtenida.nombre).to.equal('Tarta de jamón y queso');
-    expect(comidaObtenida.id).to.equal(4);
+    expect(comidaObtenida.id).to.not.exist;
   });
 
   it(`Debe retornar todas las comidas almacenadas`, () => {
