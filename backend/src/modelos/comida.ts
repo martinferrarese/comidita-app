@@ -1,10 +1,12 @@
-export class Comida {
-  private _id = 0;
+import { ObjectId } from 'mongoose';
 
+export class Comida {
+  private _id?: ObjectId;
   private _nombre: string;
 
-  constructor(nombreDeComida: string) {
+  constructor(nombreDeComida: string, id?: ObjectId) {
     this._nombre = nombreDeComida;
+    this._id = id;
   }
 
   set nombre(nombre: string) {
@@ -15,11 +17,11 @@ export class Comida {
     return this._nombre;
   }
 
-  set id(idASetear: number) {
+  set id(idASetear: ObjectId | undefined) {
     this._id = idASetear;
   }
 
-  get id(): number {
+  get id(): ObjectId | undefined {
     return this._id;
   }
 }
