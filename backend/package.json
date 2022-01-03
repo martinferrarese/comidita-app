@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node ./src/server.ts",
+    "start": "ts-node ./index.ts",
     "dev": "nodemon ./src/server.ts",
     "test": "mocha -r ts-node/register src/tests/**/**/*.spec.ts",
     "unit-tests": "mocha -r ts-node/register src/tests/**/**/*.spec.ts",
@@ -51,6 +51,7 @@
     "express": "^4.17.1",
     "mongoose": "^6.0.13",
     "prettier": "^2.4.1",
+    "supertest": "^6.1.6",
     "tslib": "^2.3.1"
   }
 }
