@@ -1,24 +1,30 @@
 import 'mocha';
 import { expect } from 'chai';
-import sinon from 'sinon';
+import sinon, { SinonStub } from 'sinon';
 import { ComidaRepository } from '../../../repositorios/comida-repository';
 import { Comida } from '../../../modelos/comida';
 import { ComidaService } from '../../../servicios/comida-service';
 
 let comidaRepository: ComidaRepository;
+let stubComidaRepository: SinonStub;
 
 function dadoQueSeTieneUnaTartaDeJamonYQuesoAlmacenadaConId4(): void {
-  const comida: Comida = new Comida('Tarta de jamón y queso');
-  sinon.stub(comidaRepository, 'buscarComida').returns(comida);
+  const comida: Comida[] = [];
+  comida.push(new Comida('Tarta de jamón y queso'));
+  stubComidaRepository = sinon
+    .stub(comidaRepository, 'buscarComida')
+    .returns(comida);
 }
 
 function dadoQueSeTienen3ComidasAlmacenadas() {
-  const comidas = [
+  const comidas: Comida[] = [
     new Comida('Sopa'),
     new Comida('Milanesa'),
     new Comida('Fideos con crema'),
   ];
-  sinon.stub(comidaRepository, 'buscarComidas').returns(comidas);
+  stubComidaRepository = sinon
+    .stub(comidaRepository, 'buscarComida')
+    .returns(comidas);
 }
 
 describe('Pruebas sobre ComidaService', () => {
@@ -27,23 +33,27 @@ describe('Pruebas sobre ComidaService', () => {
   });
 
   afterEach(() => {
-    sinon.restore;
+    stubComidaRepository.restore();
   });
 
   it(`Debe retornar una comida de nombre 'Tarta de jamón y queso' dado el id 4`, () => {
     dadoQueSeTieneUnaTartaDeJamonYQuesoAlmacenadaConId4();
 
-    const comidaObtenida = new ComidaService(comidaRepository).obtenerComida(4);
+    const comidaObtenida: Comida[] = new ComidaService(
+      comidaRepository,
+    ).obtenerComida(4);
 
-    expect(comidaObtenida.nombre).to.equal('Tarta de jamón y queso');
-    expect(comidaObtenida.id).to.not.exist;
+    expect(comidaObtenida[0].nombre).to.equal('Tarta de jamón y queso');
+    expect(comidaObtenida[0].id).to.not.exist;
   });
 
-  it(`Debe retornar todas las comidas almacenadas`, () => {
+  it(`Debe devolver todas las comidas si recibe un id nulo`, () => {
     dadoQueSeTienen3ComidasAlmacenadas();
 
-    const comidas = new ComidaService(comidaRepository).obtenerComidas();
+    const comidasObtenidas: Comida[] = new ComidaService(
+      comidaRepository,
+    ).obtenerComida(null);
 
-    expect(comidas.length).to.equal(3);
+    expect(comidasObtenidas.length).to.be.equal(3);
   });
 });
