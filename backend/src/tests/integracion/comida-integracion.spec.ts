@@ -1,5 +1,5 @@
 import 'mocha';
-import 'chai';
+import chai from 'chai';
 import { App } from '../../server';
 
 //import app from '../../server';
@@ -9,12 +9,15 @@ import chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
 describe('Pruebas de integración sobra Comida', () => {
-  it('Debe devolver un status 200 al pedir las comidas sin parámetros', () => {
+  it('Debe devolver un status 200 al pedir las comidas sin parámetros', (done) => {
     chai
-      .request(new App())
-      .get('/comida')
-      .then((res) => {
-        expect(res.status).to.equal(200);
+      .request('http://localhost:8000')
+      .get('/api')
+      .end((err, res) => {
+        expect(res).to.not.be.undefined;
+        expect(res).to.not.be.null;
+        expect(res).to.have.status(200);
+        done();
       });
   });
 });
