@@ -9,8 +9,7 @@ let comidaRepository: ComidaRepository;
 let stubComidaRepository: SinonStub;
 
 function dadoQueSeTieneUnaTartaDeJamonYQuesoAlmacenadaConId4(): void {
-  const comida: Comida[] = [];
-  comida.push(new Comida('Tarta de jamón y queso'));
+  const comida: Comida[] = [new Comida('Tarta de jamón y queso')];
   stubComidaRepository = sinon
     .stub(comidaRepository, 'buscarComida')
     .returns(comida);
@@ -43,11 +42,11 @@ describe('Pruebas sobre ComidaService', () => {
       comidaRepository,
     ).obtenerComida(4);
 
-    expect(comidaObtenida[0].nombre).to.equal('Tarta de jamón y queso');
-    expect(comidaObtenida[0].id).to.not.exist;
+    expect(comidaObtenida.length).to.be.equal(1);
+    expect(comidaObtenida[0].nombre).to.be.equal('Tarta de jamón y queso');
   });
 
-  it(`Debe devolver todas las comidas si recibe un id nulo`, () => {
+  it(`Debe devolver todas las comidas almacenadas si recibe un id nulo`, () => {
     dadoQueSeTienen3ComidasAlmacenadas();
 
     const comidasObtenidas: Comida[] = new ComidaService(
