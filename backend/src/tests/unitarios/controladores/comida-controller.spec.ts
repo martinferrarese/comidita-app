@@ -1,25 +1,15 @@
 import 'mocha';
-import 'chai';
-import { expect } from 'chai';
-import sinon from 'sinon';
-import { ComidaService } from '../../../servicios/comida-service';
-import { ComidaRepository } from '../../../repositorios/comida-repository';
-import { Comida } from '../../../modelos/comida';
-import { ComidaController } from '../../../controladores/comida-controller';
+//import 'chai';
+//import chaiHttp from 'chai-http';
+//import { expect } from 'chai';
+import supertest from 'supertest';
+import { App } from '../../../server';
 
-let comidaServiceStub: ComidaService;
+//chai.use(chaiHttp);
 
 describe('Pruebas sobre ComidaController', () => {
-  before(() => {
-    comidaServiceStub = new ComidaService(new ComidaRepository());
-  });
-  it('Debe devolver todas las comidas disponibles', () => {
-    sinon
-      .stub(comidaServiceStub, 'obtenerComida')
-      .returns(new Comida('Milanesa'));
-
-    const resultado: Comida[] = new ComidaController(
-      comidaServiceStub,
-    ).buscarComida();
+  it('Devuelve status 200 al interactuar con /api', (done) => {
+    const app = new App().app;
+    supertest(app).get('/api').expect({ message: 'Alooooo' }).expect(200, done);
   });
 });

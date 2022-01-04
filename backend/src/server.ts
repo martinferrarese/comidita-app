@@ -2,16 +2,22 @@ import express from 'express';
 import { Server } from 'http';
 
 export class App {
-  private _app = express();
-  private _server = new Server(this._app);
+  public app = express();
+  private _server = new Server(this.app);
 
   constructor() {
-    this._app.use(express.json());
-    this._app.use(
+    this.app.use(express.json());
+    this.app.use(
       express.urlencoded({
         extended: false,
       }),
     );
+
+    this.app.get('/api', async (req, res) => {
+      try {
+        res.status(200).json({ message: 'Alooooo' });
+      } catch (error) {}
+    });
   }
 
   public initApp(port: number): void {
