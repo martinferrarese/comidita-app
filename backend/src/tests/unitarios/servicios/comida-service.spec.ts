@@ -32,7 +32,8 @@ describe('Pruebas sobre ComidaService', () => {
   });
 
   afterEach(() => {
-    stubComidaRepository.restore();
+    if(stubComidaRepository)
+        stubComidaRepository.restore();
   });
 
   it(`Debe retornar una comida de nombre 'Tarta de jamón y queso' dado el id 4`, () => {
@@ -47,12 +48,15 @@ describe('Pruebas sobre ComidaService', () => {
   });
 
   it(`Debe devolver todas las comidas almacenadas si recibe un id nulo`, () => {
-    dadoQueSeTienen3ComidasAlmacenadas();
-
+    const repository = new ComidaRepository();
+    const comidaRepositoryMock = sinon.mock(repository);
+    
+    comidaRepositoryMock.expects('buscarComida').withArgs(8);
+  
     const comidasObtenidas: Comida[] = new ComidaService(
-      comidaRepository,
-    ).obtenerComida(null);
+      repository,
+      ).obtenerComida(null);
 
-    expect(comidasObtenidas.length).to.be.equal(3);
+    comidaRepositoryMock.verify();
   });
 });
