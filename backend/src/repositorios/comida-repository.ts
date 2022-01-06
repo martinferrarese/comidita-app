@@ -1,9 +1,8 @@
 import { Comida } from '../modelos/comida';
 
 export class ComidaRepository {
-  public buscarComida(id: number | null): Comida[] {
-    const comida: Comida[] = [new Comida('')];
-    return comida;
+  public buscarComida(comida: Comida): Comida[] {
+    return [comida];
   }
 
   public buscarComidas(): Comida[] {

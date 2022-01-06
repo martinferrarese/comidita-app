@@ -1,6 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-import sinon, { SinonStub } from 'sinon';
+import sinon, { SinonMock, SinonStub } from 'sinon';
 import { ComidaRepository } from '../../../repositorios/comida-repository';
 import { Comida } from '../../../modelos/comida';
 import { ComidaService } from '../../../servicios/comida-service';
@@ -9,18 +9,24 @@ let comidaRepository: ComidaRepository;
 let stubComidaRepository: SinonStub;
 
 function dadoQueSeTieneUnaTartaDeJamonYQuesoAlmacenadaConId4(): void {
-  const comida: Comida[] = [new Comida('Tarta de jamón y queso')];
+  let tartaDeJamonYQueso: Comida = new Comida();
+  tartaDeJamonYQueso.nombre = 'Tarta de jamón y queso';
+  const comida: Comida[] = [tartaDeJamonYQueso];
   stubComidaRepository = sinon
     .stub(comidaRepository, 'buscarComida')
     .returns(comida);
 }
 
 function dadoQueSeTienen3ComidasAlmacenadas() {
-  const comidas: Comida[] = [
-    new Comida('Sopa'),
-    new Comida('Milanesa'),
-    new Comida('Fideos con crema'),
-  ];
+  let sopa: Comida = new Comida();
+  let milanesa: Comida = new Comida();
+  let fideosConCrema: Comida = new Comida();
+  sopa.nombre = 'Sopa';
+  milanesa.nombre = 'Milanesa';
+  fideosConCrema.nombre = 'Fideos con crema';
+
+  const comidas: Comida[] = [sopa, milanesa, fideosConCrema];
+  
   stubComidaRepository = sinon
     .stub(comidaRepository, 'buscarComida')
     .returns(comidas);
@@ -47,14 +53,11 @@ describe('Pruebas sobre ComidaService', () => {
     expect(comidaObtenida[0].nombre).to.be.equal('Tarta de jamón y queso');
   });
 
-  it(`Debe devolver todas las comidas almacenadas si recibe un id nulo`, () => {
-    const comidaRepositoryMock = sinon.mock(comidaRepository);
-    
-    comidaRepositoryMock.expects('buscarComida').withArgs(8);
-  
-    const comidasObtenidas: Comida[] = new ComidaService(
-      comidaRepository,
-      ).obtenerComida(null);
+  it(`Debe enviar una comida vacía al repositorio si no recibe un id en obtenerComida`, () => {
+    const comidaRepositoryMock: SinonMock = sinon.mock(comidaRepository);
+    comidaRepositoryMock.expects('buscarComida').withArgs(new Comida());
+
+    new ComidaService(comidaRepository).obtenerComida(null);
 
     comidaRepositoryMock.verify();
   });

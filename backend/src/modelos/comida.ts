@@ -4,9 +4,8 @@ export class Comida {
   private _id?: ObjectId;
   private _nombre: string;
 
-  constructor(nombreDeComida: string, id?: ObjectId) {
-    this._nombre = nombreDeComida;
-    this._id = id;
+  constructor() {
+    this._nombre = '';
   }
 
   set nombre(nombre: string) {

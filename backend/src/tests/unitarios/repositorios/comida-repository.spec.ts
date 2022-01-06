@@ -4,7 +4,9 @@ import { ComidaRepository } from '../../../repositorios/comida-repository';
 import { Comida } from '../../../modelos/comida';
 
 function dadoQueTengoUnaNuevaComidaParaAlmacenar(): Comida {
-  return new Comida('Papas al horno');
+  let comida: Comida = new Comida();
+  comida.nombre = 'Papas al horno';
+  return comida;
 }
 
 function entoncesLaComidaFueAlmacenada(
