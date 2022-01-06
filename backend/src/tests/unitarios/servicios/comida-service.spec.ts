@@ -48,13 +48,12 @@ describe('Pruebas sobre ComidaService', () => {
   });
 
   it(`Debe devolver todas las comidas almacenadas si recibe un id nulo`, () => {
-    const repository = new ComidaRepository();
-    const comidaRepositoryMock = sinon.mock(repository);
+    const comidaRepositoryMock = sinon.mock(comidaRepository);
     
     comidaRepositoryMock.expects('buscarComida').withArgs(8);
   
     const comidasObtenidas: Comida[] = new ComidaService(
-      repository,
+      comidaRepository,
       ).obtenerComida(null);
 
     comidaRepositoryMock.verify();
