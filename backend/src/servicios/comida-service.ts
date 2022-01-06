@@ -8,8 +8,14 @@ export class ComidaService {
     this._comidaRepository = comidaRepository;
   }
 
-  public obtenerComida(id: number | null): Comida[] {
-    return this._comidaRepository.buscarComida({});
+  public obtenerComida(idComida: string | null): Comida[] {
+    let filtro: unknown = {};
+    if (idComida) {
+      filtro = {
+        id: idComida,
+      };
+    }
+    return this._comidaRepository.buscarComida(filtro);
   }
 
   public obtenerComidas(): Comida[] {

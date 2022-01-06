@@ -47,7 +47,7 @@ describe('Pruebas sobre ComidaService', () => {
 
     const comidaObtenida: Comida[] = new ComidaService(
       comidaRepository,
-    ).obtenerComida(4);
+    ).obtenerComida('4');
 
     expect(comidaObtenida.length).to.be.equal(1);
     expect(comidaObtenida[0].nombre).to.be.equal('Tarta de jamón y queso');
@@ -55,10 +55,21 @@ describe('Pruebas sobre ComidaService', () => {
 
   it(`Debe enviar un filtro vacío al repositorio si no recibe un id`, () => {
     const comidaRepositoryMock: SinonMock = sinon.mock(comidaRepository);
-    let filtro: Object = {};
-    comidaRepositoryMock.expects('buscarComida').withArgs(filtro);
+    let filtroEsperado: Object = {};
+    comidaRepositoryMock.expects('buscarComida').withArgs(filtroEsperado);
 
     new ComidaService(comidaRepository).obtenerComida(null);
+
+    comidaRepositoryMock.verify();
+  });
+
+  it(`Debe enviar un filtro con un id al repositorio cuando se recibe un id por parámetro`, () => {
+    const comidaRepositoryMock: SinonMock = sinon.mock(comidaRepository);
+    let filtroEsperado: Object = {
+      id: '0x00',
+    }
+    comidaRepositoryMock.expects('buscarComida').withArgs(filtroEsperado);
+    new ComidaService(comidaRepository).obtenerComida("0x00");
 
     comidaRepositoryMock.verify();
   });
