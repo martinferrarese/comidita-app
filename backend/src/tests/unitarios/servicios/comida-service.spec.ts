@@ -53,9 +53,10 @@ describe('Pruebas sobre ComidaService', () => {
     expect(comidaObtenida[0].nombre).to.be.equal('Tarta de jamón y queso');
   });
 
-  it(`Debe enviar una comida vacía al repositorio si no recibe un id en obtenerComida`, () => {
+  it(`Debe enviar un filtro vacío al repositorio si no recibe un id`, () => {
     const comidaRepositoryMock: SinonMock = sinon.mock(comidaRepository);
-    comidaRepositoryMock.expects('buscarComida').withArgs(new Comida());
+    let filtro: Object = {};
+    comidaRepositoryMock.expects('buscarComida').withArgs(filtro);
 
     new ComidaService(comidaRepository).obtenerComida(null);
 
