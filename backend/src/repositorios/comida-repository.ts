@@ -1,7 +1,7 @@
 import { Comida } from '../modelos/comida';
 
 export class ComidaRepository {
-  public buscarComida(filtro: Object): Comida[] {
+  public buscarComida(filtro: unknown): Comida[] {
     return [new Comida()];
   }
 
