@@ -17,8 +17,4 @@ export class ComidaService {
     }
     return this._comidaRepository.buscarComida(filtro);
   }
-
-  public obtenerComidas(): Comida[] {
-    return this._comidaRepository.buscarComidas();
-  }
 }
