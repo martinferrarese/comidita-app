@@ -16,9 +16,7 @@ export class ComidaService {
           id: idComida,
         };
       }
-      const comidas = [new Comida(), new Comida()];
-      resolve(comidas);
-      // resolve(this._comidaRepository.buscarComida(filtro));
+      resolve(this._comidaRepository.buscarComida(filtro));
     });
   }
 }
