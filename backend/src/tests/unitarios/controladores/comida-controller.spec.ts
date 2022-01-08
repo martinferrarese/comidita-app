@@ -1,10 +1,27 @@
 import 'mocha';
 import supertest from 'supertest';
-import { App } from '../../../network/server';
+import { ComidaController } from '../../../controladores/comida-controller';
+import { ComiditaServer } from '../../../network/server';
+import sinon, { SinonMock } from 'sinon';
+import { ComidaService } from '../../../servicios/comida-service';
+import { ComidaRepository } from '../../../repositorios/comida-repository';
+import chai from 'chai';
 
 describe('Pruebas sobre ComidaController', () => {
-  it('Devuelve status 200 al realizar un GET en /comida', (done) => {
-    const app = new App().app;
-    supertest(app).get('/comida').expect(200, done);
+  describe('GET', () => {
+    it('Debe enviar al servicio el id recibido en el query params', (done) => {
+      const idEnviado: string = '0xssE9';
+      const server = new ComiditaServer();
+      const comidaService: ComidaService = new ComidaService(new ComidaRepository());
+      const comidaServiceMock: SinonMock = sinon.mock(comidaService);
+      comidaServiceMock.expects('obtenerComida').withArgs(idEnviado);
+      const comidaController = new ComidaController(comidaService);
+
+      server.app.use('/comida', comidaController.router);
+
+      const req = supertest(server.app).get(`/comida/${idEnviado}`).expect(200, done);
+      
+      //comidaServiceMock.verify();
+    });
   });
 });

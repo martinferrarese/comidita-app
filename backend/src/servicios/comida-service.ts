@@ -8,13 +8,17 @@ export class ComidaService {
     this._comidaRepository = comidaRepository;
   }
 
-  public obtenerComida(idComida: string | null): Comida[] {
-    let filtro: unknown = {};
-    if (idComida) {
-      filtro = {
-        id: idComida,
-      };
-    }
-    return this._comidaRepository.buscarComida(filtro);
+  public obtenerComida(idComida: string | null): Promise<Comida[]> {
+    return new Promise((resolve) => {
+      let filtro: unknown = {};
+      if (idComida) {
+        filtro = {
+          id: idComida,
+        };
+      }
+      const comidas = [new Comida(), new Comida()];
+      resolve(comidas);
+      // resolve(this._comidaRepository.buscarComida(filtro));
+    });
   }
 }

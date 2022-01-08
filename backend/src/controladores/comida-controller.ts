@@ -1,5 +1,4 @@
 import express, { Router } from 'express';
-import { Comida } from '../modelos/comida';
 import { ComidaRepository } from '../repositorios/comida-repository';
 import { ComidaService } from '../servicios/comida-service';
 
@@ -7,13 +6,18 @@ export class ComidaController {
   private _comidaService: ComidaService;
   private _router: Router = express.Router();
 
-  constructor() {
-    this._comidaService = new ComidaService(new ComidaRepository());
+  constructor(comidaService: ComidaService | null) {
+    this._comidaService = comidaService
+      ? comidaService
+      : new ComidaService(new ComidaRepository());
     this._router = express.Router();
 
-    this._router.get('/', async (req, res) => {
+    this._router.get('/:idComida', async (req, res) => {
       try {
-        res.sendStatus(200);
+        const respuesta = await this._comidaService.obtenerComida(
+          req.params.idComida,
+        );
+        res.sendStatus(200).send(respuesta);
       } catch (error) {}
     });
   }
