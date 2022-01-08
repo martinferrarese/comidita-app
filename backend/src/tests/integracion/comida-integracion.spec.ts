@@ -1,6 +1,6 @@
 import 'mocha';
 import chai from 'chai';
-import { App } from '../../server';
+import { App } from '../../network/server';
 
 //import app from '../../server';
 import { expect } from 'chai';

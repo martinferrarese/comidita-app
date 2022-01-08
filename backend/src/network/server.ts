@@ -12,12 +12,6 @@ export class App {
         extended: false,
       }),
     );
-
-    this.app.get('/api', async (req, res) => {
-      try {
-        res.status(200).json({ message: 'Alooooo' });
-      } catch (error) {}
-    });
   }
 
   public initApp(port: number): void {

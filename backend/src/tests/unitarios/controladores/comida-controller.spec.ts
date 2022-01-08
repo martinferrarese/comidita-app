@@ -1,10 +1,10 @@
 import 'mocha';
 import supertest from 'supertest';
-import { App } from '../../../server';
+import { App } from '../../../network/server';
 
 describe('Pruebas sobre ComidaController', () => {
-  it('Devuelve status 200 al interactuar con /api', (done) => {
+  it('Devuelve status 200 al realizar GET en /comida', (done) => {
     const app = new App().app;
-    supertest(app).get('/api').expect(200).expect({ message: 'Alooooo' }, done);
+    supertest(app).get('/comida').expect(200, done);
   });
 });
