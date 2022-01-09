@@ -18,7 +18,9 @@ export class ComidaController {
           req.params.idComida,
         );
         res.sendStatus(200).send(respuesta);
-      } catch (error) {}
+      } catch (error) {
+        res.sendStatus(500).send(error);
+      }
     });
   }
 

@@ -19,9 +19,10 @@ describe('Pruebas sobre ComidaController', () => {
 
       server.app.use('/comida', comidaController.router);
 
-      const req = supertest(server.app).get(`/comida/${idEnviado}`).expect(200, done);
-      
-      //comidaServiceMock.verify();
+      supertest(server.app).get(`/comida/${idEnviado}`).expect(200).end((err, res) => {
+        comidaServiceMock.verify();
+        done();
+      });
     });
   });
 });
